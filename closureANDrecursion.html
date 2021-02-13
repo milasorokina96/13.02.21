@@ -1,0 +1,77 @@
+<script>
+    // Сделайте функцию, каждый вызов который будет генерировать случайные числа от 1 до 10, 
+    // но так, чтобы они не повторялись, пока не будут перебраны все числа из этого промежутка. 
+    // Решите задачу через замыкания - в замыкании должен хранится массив чисел, 
+    // которые уже были сгенерированы функцией.
+
+function generateUniqueNum() {
+  const generatedNums = [];
+
+  return function() {
+    let num = Math.floor(Math.random() * 10 + 1);
+
+    let generatedNum = generatedNums.find((generatedNum) => generatedNum === num);
+
+    if (generatedNum) {
+        return `${num} has already been generated`;
+
+    } else {
+        generatedNums.push(num);
+        return num;
+
+    }
+  }
+}
+
+let uniqueNum = generateUniqueNum();
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+console.log(uniqueNum());
+
+
+// У нас есть рюкзак (массив) у него ограниченный размер (5). 
+// Также у нас есть вещи, у которых есть название и кол-во. 
+// Рюкзак будет заполняться пока не закончатся вещи или размер рюкзака.
+// Если нельзя поместить все кол-во, то помещаем только часть.
+// result: backpack = [orange, orange, juice, pack of cookie, pack of cookies]
+
+const backpack = new Array(5);
+
+const things = [
+  { name: "orange", count: 1 },
+  { name: "juice", count: 2 },
+  { name: "pack of cookies", count: 7 },
+];
+
+function pack(backpack, things, currentThingIndex = 0) {
+  let backpackEmptySlotIndex = backpack.findIndex((value) => value === undefined); 
+
+  if (things.length === currentThingIndex) { // вещи закончатся
+    return backpack;
+  }
+
+  const count = things[currentThingIndex].count;
+
+  for (let index = 0; index < count; index++) { // цикл по кол-ву определенной вещи.
+    backpack[backpackEmptySlotIndex++] = things[currentThingIndex].name;
+
+    if (backpackEmptySlotIndex === backpack.length) { // рюкзак закончится
+      return backpack;
+    }
+  }
+
+  return pack(backpack, things, ++currentThingIndex);
+}
+
+console.log(pack(backpack, things));
+
+</script>

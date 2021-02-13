@@ -1,0 +1,88 @@
+<script>
+// Есть две сущности человек и машина. 
+// У машины есть название, год производства, максимальная скорость и цена.
+// У человека есть имя, фамилия, год рождения, деньги. 
+// Люди:
+// метод получения возраста age
+// метод покупки машины buyCar
+// Машины:
+// метод showInfo
+// getTimeOfTrip метод для подсчета необходимого времени для преодоления переданного расстояния 
+// со средней скоростью. Учтите, что через каждые 4 часа дороги водителю необходимо делать перерыв на 1 час.
+
+function Car(name, year, maxSpeed, price){
+    this.name = name;
+    this.year = year;
+    this.maxSpeed = maxSpeed;
+    this.price = price;
+}
+
+function Human(name, surname, yearOfBirth, money) {
+    this.name = name;
+    this.surname = surname;
+    this.yearOfBirth = yearOfBirth;
+    this.money = money;
+    this.cars = [];
+}
+
+Car.prototype = {
+    constructor: Car.prototype.constructor,
+
+    showInfo(){
+        return `This is ${this.name}. Year - ${this.year}. Max speed - ${this.maxSpeed} km/h. It costs ${this.price}$`;
+
+    },
+
+    getTimeOfTrip(distance){
+        let time = distance / this.maxSpeed;
+        const timeForTravel = 4;
+        
+        if(time > timeForTravel){
+            const mod = time % timeForTravel;
+            const stop = Math.floor(time / timeForTravel);
+            if(mod === 0 || mod >= 5) {
+                return time + stop - 1;
+
+            }
+            
+            return time = time + stop;
+        }
+        return time;
+    },
+
+}
+
+Human.prototype = {
+    constructor: Human.prototype.constructor,
+
+    get age() {
+        return (new Date).getFullYear() - this.yearOfBirth;
+    },
+
+    checkAge(age) {
+        if(age < 18){
+            throw new Error(`You are too young`);
+        }
+    },
+
+    buyCar(car) {
+        checkAge(this.age);
+        if(this.money < car.price){
+            throw new Error(`This car is too expensive for you`);
+        }
+        this.cars.push(car);
+        this.money = this.money - car.price;
+
+    },
+}
+
+
+const human1 = new Human("Bob", "Smith", 1990, 20000);
+const car1 = new Car('MINI Cooper', 2015, 220, 11000);
+const car2 = new Car('BMW i3', 2014, 120, 13000);
+console.log(car1.showInfo());
+console.log(car1.getTimeOfTrip(2200));
+console.log(human1.age);
+console.log(human1.buyCar(car1));
+console.log(human1);
+</script>
