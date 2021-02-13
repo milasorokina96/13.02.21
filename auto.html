@@ -59,14 +59,14 @@ Human.prototype = {
         return (new Date).getFullYear() - this.yearOfBirth;
     },
 
-    checkAge(age) {
-        if(age < 18){
+    checkAge() {
+        if(this.age < 18){
             throw new Error(`You are too young`);
         }
     },
 
     buyCar(car) {
-        checkAge(this.age);
+        this.checkAge();
         if(this.money < car.price){
             throw new Error(`This car is too expensive for you`);
         }
@@ -83,6 +83,6 @@ const car2 = new Car('BMW i3', 2014, 120, 13000);
 console.log(car1.showInfo());
 console.log(car1.getTimeOfTrip(2200));
 console.log(human1.age);
-console.log(human1.buyCar(car1));
+human1.buyCar(car1);
 console.log(human1);
 </script>
