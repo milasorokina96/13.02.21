@@ -15,7 +15,7 @@
                 let secondValue = 1;
                 let index = 0;
 
-                while(index <= n){
+                while(index <= arg){
                     yield firstValue;
                     const sum = firstValue + secondValue;
                     firstValue = secondValue;
@@ -23,15 +23,15 @@
                     index++;
 
                 }
-
-                const generator = generateFib();
-
-                for(let value of generator) {
-                    result.push(value);
-                }
-
-                cash.set(arg, result);
             }
+
+            const generator = generateFib();
+
+            for(let value of generator) {
+                    result.push(value);
+            }
+
+            cash.set(arg, result);
 
             return result;
         }
